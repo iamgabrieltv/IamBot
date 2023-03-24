@@ -2,12 +2,12 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 // Require the necessary discord.js classes
-const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
+const { Client, Collection, Events, GatewayIntentBits, ActivityType } = require('discord.js');
 
-const { token } = require('./config.json');
+const { token, guildId } = require('./config.json');
 
 // Create a new client instance
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers] });
 
 client.commands = new Collection();
 
@@ -27,10 +27,35 @@ for (const file of commandFiles) {
 	}
 }
 
+function updatePresence() {
+	const guild = client.guilds.cache.get(guildId);
+	const memberCount = guild.memberCount;
+
+	// Set Activity
+
+	client.user.setPresence({
+		activities: [{ name: `over ${memberCount} Hoomans`, type: ActivityType.Watching }],
+		status: 'online',
+	});
+}
+
 // When the client is ready, run this code (only once)
 // We use 'c' for the event parameter to keep it separate from the already defined 'client'
 client.once(Events.ClientReady, (c) => {
 	console.log(`Ready! Logged in as ${c.user.tag}`);
+
+	setInterval(() => {
+		updatePresence();
+	}, 300000);
+});
+
+// Welcome message
+
+client.on(Events.GuildMemberAdd, async (member) => {
+	const welcomeChannel = client.channels.cache.get('1088826270130896988');
+	welcomeChannel.send(`Welcome, <@${member.id}>! <a:peepohey:1088902218972930190>`);
+
+	updatePresence();
 });
 
 // Log in to Discord with your client's token
