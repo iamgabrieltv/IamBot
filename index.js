@@ -44,6 +44,8 @@ function updatePresence() {
 client.once(Events.ClientReady, (c) => {
 	console.log(`Ready! Logged in as ${c.user.tag}`);
 
+	updatePresence();
+
 	setInterval(() => {
 		updatePresence();
 	}, 300000);
@@ -53,7 +55,9 @@ client.once(Events.ClientReady, (c) => {
 
 client.on(Events.GuildMemberAdd, async (member) => {
 	const welcomeChannel = client.channels.cache.get('1088826270130896988');
-	welcomeChannel.send(`Welcome, <@${member.id}>! <a:peepohey:1088902218972930190>`);
+	welcomeChannel.send(
+		`Welcome, <@${member.id}>! <a:peepohey:1088902218972930190> Go get your roles in the **Customize** tab of <id:browse> to access more parts of the server!`,
+	);
 
 	updatePresence();
 });
