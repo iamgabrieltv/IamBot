@@ -32,8 +32,9 @@ for (const file of commandFiles) {
 function meow() {
 	const p = randomInt(19);
 	const channel = client.channels.cache.get('1088818573142663262');
+	const hour = new Date().getHours();
 
-	if (p == 1) {
+	if (p == 1 && hour >= 8 && hour <= 21) {
 		const p1 = randomInt(2);
 
 		switch (p1) {
