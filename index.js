@@ -30,11 +30,19 @@ for (const file of commandFiles) {
 function updatePresence() {
 	const guild = client.guilds.cache.get(guildId);
 	const memberCount = guild.memberCount;
+	const members = guild.members.cache;
+
+	// loop through the members and count the bots
+	let botCount = 0;
+
+	members.forEach((member) => {
+		if (member.user.bot) botCount++;
+	});
 
 	// Set Activity
 
 	client.user.setPresence({
-		activities: [{ name: `over ${memberCount} Hoomans`, type: ActivityType.Watching }],
+		activities: [{ name: `over ${memberCount - botCount} Hoomans`, type: ActivityType.Watching }],
 		status: 'online',
 	});
 }
