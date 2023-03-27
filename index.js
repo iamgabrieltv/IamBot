@@ -3,6 +3,7 @@ const path = require('node:path');
 
 // Require the necessary discord.js classes
 const { Client, Collection, Events, GatewayIntentBits, ActivityType } = require('discord.js');
+const hungyLevel = require('./hungyLevel');
 
 const { token, guildId } = require('./config.json');
 const { randomInt } = require('node:crypto');
@@ -29,20 +30,20 @@ for (const file of commandFiles) {
 }
 
 function meow() {
-	const p = randomInt(100);
+	const p = randomInt(19);
 	const channel = client.channels.cache.get('1088818573142663262');
 
-	if (p == 55) {
-		const p1 = randomInt(4);
+	if (p == 1) {
+		const p1 = randomInt(2);
 
 		switch (p1) {
-			case 1:
+			case 0:
 				channel.send('Meow!');
 				break;
-			case 2:
+			case 1:
 				channel.send('Miiiaaauuuuuuu...');
 				break;
-			case 3:
+			case 2:
 				channel.send('Mau!');
 				break;
 		}
@@ -69,6 +70,27 @@ function updatePresence() {
 	});
 }
 
+function checkOnCat() {
+	const channel = client.channels.cache.get('1088818573142663262');
+	const hour = new Date().getHours();
+
+	if (hour >= 8 && hour <= 21 && hungyLevel >= 10) {
+		switch (hungyLevel.getLevel()) {
+			case hungyLevel.getLevel() <= 40:
+				channel.send(`I'm starting to feel hungy. :( *Hungylevel: ${hungyLevel.getLevel()}%*)`);
+
+				break;
+
+			case hungyLevel.getLevel() <= 20:
+				channel.send(
+					`I'm getting really hungry, @everyone. >:( *Hungylevel: ${hungyLevel.getLevel()}%*)`,
+				);
+
+				break;
+		}
+	}
+}
+
 // When the client is ready, run this code (only once)
 // We use 'c' for the event parameter to keep it separate from the already defined 'client'
 client.once(Events.ClientReady, (c) => {
@@ -85,6 +107,10 @@ client.once(Events.ClientReady, (c) => {
 	setInterval(meow, 60000);
 
 	setInterval(updatePresence, 300000);
+
+	setInterval(hungyLevel.update, 3600000);
+
+	setInterval(checkOnCat, 1800000);
 });
 
 // Welcome message
