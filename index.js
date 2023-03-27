@@ -5,6 +5,7 @@ const path = require('node:path');
 const { Client, Collection, Events, GatewayIntentBits, ActivityType } = require('discord.js');
 
 const { token, guildId } = require('./config.json');
+const { randomInt } = require('node:crypto');
 
 // Create a new client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers] });
@@ -24,6 +25,27 @@ for (const file of commandFiles) {
 		console.log(
 			`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`,
 		);
+	}
+}
+
+function meow() {
+	const p = randomInt(100);
+	const channel = client.channels.cache.get('1088818573142663262');
+
+	if (p == 55) {
+		const p1 = randomInt(4);
+
+		switch (p1) {
+			case 1:
+				channel.send('Meow!');
+				break;
+			case 2:
+				channel.send('Miiiaaauuuuuuu...');
+				break;
+			case 3:
+				channel.send('Mau!');
+				break;
+		}
 	}
 }
 
@@ -52,11 +74,17 @@ function updatePresence() {
 client.once(Events.ClientReady, (c) => {
 	console.log(`Ready! Logged in as ${c.user.tag}`);
 
+	// Run various events on Ready
+
 	updatePresence();
 
-	setInterval(() => {
-		updatePresence();
-	}, 300000);
+	meow();
+
+	// Set intervals for various events
+
+	setInterval(meow, 60000);
+
+	setInterval(updatePresence, 300000);
 });
 
 // Welcome message
