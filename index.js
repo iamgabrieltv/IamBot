@@ -74,19 +74,13 @@ function checkOnCat() {
 	const channel = client.channels.cache.get('1088818573142663262');
 	const hour = new Date().getHours();
 
-	if (hour >= 8 && hour <= 21 && hungyLevel >= 10) {
-		switch (hungyLevel.getLevel()) {
-			case hungyLevel.getLevel() <= 40:
-				channel.send(`I'm starting to feel hungy. :( *Hungylevel: ${hungyLevel.getLevel()}%*)`);
-
-				break;
-
-			case hungyLevel.getLevel() <= 20:
-				channel.send(
-					`I'm getting really hungry, @everyone. >:( *Hungylevel: ${hungyLevel.getLevel()}%*)`,
-				);
-
-				break;
+	if (hour >= 8 && hour <= 21 && hungyLevel.getLevel() >= 10) {
+		if (hungyLevel.getLevel() <= 20) {
+			channel.send(
+				`I'm getting really hungry, @everyone. >:( *Hungylevel: ${hungyLevel.getLevel()}%*)`,
+			);
+		} else if (hungyLevel.getLevel() <= 40) {
+			channel.send(`I'm starting to feel hungy. :( *Hungylevel: ${hungyLevel.getLevel()}%*`);
 		}
 	}
 }
@@ -101,6 +95,8 @@ client.once(Events.ClientReady, (c) => {
 	updatePresence();
 
 	meow();
+
+	checkOnCat();
 
 	// Set intervals for various events
 
