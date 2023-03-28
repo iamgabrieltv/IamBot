@@ -1,4 +1,4 @@
-let hungyLevel = 100;
+let hungyLevel = 50;
 
 module.exports = {
 	getLevel: function () {
