@@ -4,6 +4,9 @@ const hungyLevel = require('../hungyLevel');
 module.exports = {
 	data: new SlashCommandBuilder().setName('uhungy').setDescription('Are u hungy??'),
 	async execute(interaction) {
-		await interaction.reply(`*Hungylevel: ${hungyLevel.getLevel()}*%`);
+		await interaction.reply({
+			content: `*Hungylevel: ${hungyLevel.getLevel()}*%`,
+			ephemeral: true,
+		});
 	},
 };
