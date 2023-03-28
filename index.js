@@ -54,36 +54,51 @@ function meow() {
 function updatePresence() {
 	const guild = client.guilds.cache.get(guildId);
 	const memberCount = guild.memberCount;
-	const members = guild.members.cache;
 
 	// loop through the members and count the bots
 	let botCount = 0;
 
-	members.forEach((member) => {
-		if (member.user.bot) botCount++;
-	});
+	guild.members.fetch().then((fetchedMembers) => {
+		fetchedMembers.forEach((member) => {
+			if (member.user.bot) botCount++;
+		});
 
-	// Set Activity
+		// Set Activity
 
-	client.user.setPresence({
-		activities: [{ name: `over ${memberCount - botCount} Hoomans`, type: ActivityType.Watching }],
-		status: 'online',
+		client.user.setPresence({
+			activities: [{ name: `over ${memberCount - botCount} Hoomans`, type: ActivityType.Watching }],
+			status: 'online',
+		});
 	});
 }
 
 function checkOnCat() {
+	const guild = client.guilds.cache.get(guildId);
 	const channel = client.channels.cache.get('1088818573142663262');
 	const hour = new Date().getHours();
+	let ranMemberId = 0;
 
-	if (hour >= 8 && hour <= 21 && hungyLevel.getLevel() >= 10) {
-		if (hungyLevel.getLevel() <= 20) {
-			channel.send(
-				`I'm getting really hungry, @everyone. >:( *Hungylevel: ${hungyLevel.getLevel()}%*)`,
-			);
-		} else if (hungyLevel.getLevel() <= 40) {
-			channel.send(`I'm starting to feel hungy. :( *Hungylevel: ${hungyLevel.getLevel()}%*`);
+	guild.members.fetch().then((fetchedMembers) => {
+		for (let isBot = true; isBot == true; ) {
+			const p = fetchedMembers.random();
+			isBot = p.user.bot;
+			ranMemberId = p.user.id;
 		}
-	}
+
+		if (hour >= 8 && hour <= 21 && hungyLevel.getLevel() >= 10) {
+			if (hungyLevel.getLevel() <= 20) {
+				channel.send(
+					`I'm getting really hungry, @everyone. >:( *Hungylevel: ${hungyLevel.getLevel()}%*)`,
+				);
+			} else if (hungyLevel.getLevel() <= 40) {
+				channel.send(
+					`I'm starting to feel hungy :(. Please` +
+						'`/feed` ' +
+						`me <@${ranMemberId}> *Hungylevel: ${hungyLevel.getLevel()}%*`,
+				);
+			}
+		}
+	});
 }
 
 // When the client is ready, run this code (only once)
@@ -98,6 +113,11 @@ client.once(Events.ClientReady, (c) => {
 	meow();
 
 	checkOnCat();
+
+	setTimeout(() => {
+		const guild = client.guilds.cache.get(guildId);
+		const members = guild.members.fetch();
+	}, 5000);
 
 	// Set intervals for various events
 
