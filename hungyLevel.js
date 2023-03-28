@@ -1,4 +1,6 @@
-let hungyLevel = 50;
+const fs = require('fs');
+
+let hungyLevel = parseInt(fs.readFileSync('hungyLevel.txt', 'utf8'));
 
 module.exports = {
 	getLevel: function () {
@@ -8,9 +10,11 @@ module.exports = {
 		const hour = new Date().getHours();
 		if (hour >= 8 && hour <= 21 && hungyLevel >= 10) {
 			hungyLevel = hungyLevel - 10;
+			fs.writeFileSync('hungyLevel.txt', hungyLevel.toString());
 		} else return;
 	},
 	updatePlus: function () {
 		hungyLevel = hungyLevel + 10;
+		fs.writeFileSync('hungyLevel.txt', hungyLevel.toString());
 	},
 };
