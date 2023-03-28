@@ -12,6 +12,5 @@ module.exports = {
 	},
 	updatePlus: function () {
 		hungyLevel = hungyLevel + 10;
-		console.log(hungyLevel);
 	},
 };

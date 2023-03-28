@@ -4,7 +4,7 @@ const hungyLevel = require('../hungyLevel');
 module.exports = {
 	data: new SlashCommandBuilder().setName('feed').setDescription('Give the cat some fishies! 🐟'),
 	async execute(interaction) {
-		if (hungyLevel.getLevel() >= 90) {
+		if (hungyLevel.getLevel() <= 90) {
 			if (hungyLevel.getLevel() <= 90) hungyLevel.updatePlus();
 
 			interaction.reply(

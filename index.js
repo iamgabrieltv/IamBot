@@ -88,7 +88,7 @@ function checkOnCat() {
 		if (hour >= 8 && hour <= 21 && hungyLevel.getLevel() >= 10) {
 			if (hungyLevel.getLevel() <= 20) {
 				channel.send(
-					`I'm getting really hungry, @everyone. >:( *Hungylevel: ${hungyLevel.getLevel()}%*)`,
+					`I'm getting really hungry, @everyone. >:( *Hungylevel: ${hungyLevel.getLevel()}%*`,
 				);
 			} else if (hungyLevel.getLevel() <= 40) {
 				channel.send(
