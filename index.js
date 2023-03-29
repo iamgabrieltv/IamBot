@@ -6,7 +6,7 @@ const { Client, Collection, Events, GatewayIntentBits, ActivityType } = require(
 const hungyLevel = require('./hungyLevel');
 
 const { token, guildId } = require('./config.json');
-const { randomInt } = require('node:crypto');
+const { randomInt } = require('crypto');
 
 // Create a new client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers] });
