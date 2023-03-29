@@ -34,7 +34,7 @@ function meow() {
 	const channel = client.channels.cache.get('1088818573142663262');
 	const hour = new Date().getHours();
 
-	if (p == 1 && hour >= 8 && hour <= 21) {
+	if (p == 1 && hour >= 8 && hour < 21) {
 		const p1 = randomInt(2);
 
 		switch (p1) {
@@ -54,22 +54,34 @@ function meow() {
 function updatePresence() {
 	const guild = client.guilds.cache.get(guildId);
 	const memberCount = guild.memberCount;
+	const hour = new Date().getHours();
 
-	// loop through the members and count the bots
-	let botCount = 0;
+	if (hour >= 8 && hour < 21) {
+		// loop through the members and count the bots
+		let botCount = 0;
 
-	guild.members.fetch().then((fetchedMembers) => {
-		fetchedMembers.forEach((member) => {
-			if (member.user.bot) botCount++;
+		guild.members.fetch().then((fetchedMembers) => {
+			fetchedMembers.forEach((member) => {
+				if (member.user.bot) botCount++;
+			});
+
+			// Set Activity
+
+			client.user.setPresence({
+				activities: [
+					{ name: `over ${memberCount - botCount} Hoomans`, type: ActivityType.Watching },
+				],
+				status: 'online',
+			});
 		});
-
+	} else {
 		// Set Activity
 
 		client.user.setPresence({
-			activities: [{ name: `over ${memberCount - botCount} Hoomans`, type: ActivityType.Watching }],
-			status: 'online',
+			activities: [{ name: 'dreaming about fishies 🐟', type: ActivityType.Playing }],
+			status: 'idle',
 		});
-	});
+	}
 }
 
 function checkOnCat() {
@@ -85,7 +97,7 @@ function checkOnCat() {
 			ranMemberId = p.user.id;
 		}
 
-		if (hour >= 8 && hour <= 21 && hungyLevel.getLevel() >= 10) {
+		if (hour >= 8 && hour < 21 && hungyLevel.getLevel() >= 10) {
 			if (hungyLevel.getLevel() <= 20) {
 				channel.send(
 					`I'm getting really hungry, @everyone. >:( *Hungylevel: ${hungyLevel.getLevel()}%*`,
