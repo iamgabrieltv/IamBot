@@ -1,11 +1,14 @@
 const fs = require('fs');
 const path = require('path');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 // Require the necessary discord.js classes
 const { Client, Collection, Events, GatewayIntentBits, ActivityType } = require('discord.js');
 const hungyLevel = require('./hungyLevel');
 
-const { token, guildId } = require('./config.json');
+const { TOKEN, GUILD_ID } = process.env;
 const { randomInt } = require('crypto');
 
 // Create a new client instance
@@ -52,7 +55,7 @@ function meow() {
 }
 
 function updatePresence() {
-	const guild = client.guilds.cache.get(guildId);
+	const guild = client.guilds.cache.get(GUILD_ID);
 	const memberCount = guild.memberCount;
 	const hour = new Date().getHours();
 
@@ -85,7 +88,7 @@ function updatePresence() {
 }
 
 function checkOnCat() {
-	const guild = client.guilds.cache.get(guildId);
+	const guild = client.guilds.cache.get(GUILD_ID);
 	const channel = client.channels.cache.get('1088818573142663262');
 	const hour = new Date().getHours();
 	let ranMemberId = 0;
@@ -127,7 +130,7 @@ client.once(Events.ClientReady, (c) => {
 	checkOnCat();
 
 	setTimeout(() => {
-		const guild = client.guilds.cache.get(guildId);
+		const guild = client.guilds.cache.get(GUILD_ID);
 		const members = guild.members.fetch();
 	}, 5000);
 
@@ -154,7 +157,7 @@ client.on(Events.GuildMemberAdd, async (member) => {
 });
 
 // Log in to Discord with your client's token
-client.login(token);
+client.login(TOKEN);
 
 client.on(Events.InteractionCreate, async (interaction) => {
 	if (!interaction.isChatInputCommand()) return;
