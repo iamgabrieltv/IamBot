@@ -1,5 +1,5 @@
-const fs = require('node:fs');
-const path = require('node:path');
+const fs = require('fs');
+const path = require('path');
 
 // Require the necessary discord.js classes
 const { Client, Collection, Events, GatewayIntentBits, ActivityType } = require('discord.js');
