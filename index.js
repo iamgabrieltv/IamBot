@@ -33,7 +33,7 @@ for (const file of commandFiles) {
 }
 
 function meow() {
-	const p = randomInt(19);
+	const p = randomInt(99);
 	const channel = client.channels.cache.get('1088818573142663262');
 	const hour = new Date().getHours();
 
