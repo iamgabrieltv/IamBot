@@ -15,7 +15,7 @@ module.exports = {
 		} else return;
 	},
 	updatePlus: function () {
-		if (hour >= 8 && hour < 21 && hungyLevel > 100) {
+		if (hour >= 8 && hour < 21 && hungyLevel < 100) {
 			hungyLevel = hungyLevel + 10;
 			fs.writeFileSync('hungyLevel.txt', hungyLevel.toString());
 		} else return;
