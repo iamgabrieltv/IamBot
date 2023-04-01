@@ -1,5 +1,8 @@
 const fs = require('fs');
-const hour = new Date().getHours()
+
+function hour() {
+ return new Date().getHours()
+}
 
 let hungyLevel = parseInt(fs.readFileSync('hungyLevel.txt', 'utf8'));
 
@@ -8,14 +11,13 @@ module.exports = {
 		return hungyLevel;
 	},
 	update: function () {
-		const hour = new Date().getHours();
-		if (hour >= 8 && hour < 21 && hungyLevel >= 10) {
+		if (hour() >= 8 && hour() < 21 && hungyLevel >= 10) {
 			hungyLevel = hungyLevel - 10;
 			fs.writeFileSync('hungyLevel.txt', hungyLevel.toString());
 		} else return;
 	},
 	updatePlus: function () {
-		if (hour >= 8 && hour < 21 && hungyLevel < 100) {
+		if (hour() >= 8 && hour() < 21 && hungyLevel < 100) {
 			hungyLevel = hungyLevel + 10;
 			fs.writeFileSync('hungyLevel.txt', hungyLevel.toString());
 		} else return;
