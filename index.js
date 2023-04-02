@@ -32,27 +32,27 @@ for (const file of commandFiles) {
 	}
 }
 
-function meow() {
-	const p = randomInt(19);
-	const channel = client.channels.cache.get('1088818573142663262');
-	const hour = new Date().getHours();
+// function meow() {
+// 	const p = randomInt(19);
+// 	const channel = client.channels.cache.get('1088818573142663262');
+// 	const hour = new Date().getHours();
 
-	if (p == 0 && hour >= 8 && hour < 21) {
-		const p1 = randomInt(2);
+// 	if (p == 0 && hour >= 8 && hour < 21) {
+// 		const p1 = randomInt(2);
 
-		switch (p1) {
-			case 0:
-				channel.send('Meow!');
-				break;
-			case 1:
-				channel.send('Miiiaaauuuuuuu...');
-				break;
-			case 2:
-				channel.send('Mau!');
-				break;
-		}
-	}
-}
+// 		switch (p1) {
+// 			case 0:
+// 				channel.send('Meow!');
+// 				break;
+// 			case 1:
+// 				channel.send('Miiiaaauuuuuuu...');
+// 				break;
+// 			case 2:
+// 				channel.send('Mau!');
+// 				break;
+// 		}
+// 	}
+// }
 
 function updatePresence() {
 	const guild = client.guilds.cache.get(GUILD_ID);
@@ -125,7 +125,7 @@ client.once(Events.ClientReady, (c) => {
 
 	updatePresence();
 
-	meow();
+	// meow();
 
 	checkOnCat();
 
@@ -136,7 +136,7 @@ client.once(Events.ClientReady, (c) => {
 
 	// Set intervals for various events
 
-	setInterval(meow, 60000);
+	// setInterval(meow, 60000);
 
 	setInterval(updatePresence, 300000);
 
