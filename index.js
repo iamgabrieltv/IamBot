@@ -89,7 +89,7 @@ function updatePresence() {
 
 function checkOnCat() {
 	const guild = client.guilds.cache.get(GUILD_ID);
-	const channel = client.channels.cache.get('1088818573142663262');
+	const channel = client.channels.cache.get('1088866752395489330');
 	const hour = new Date().getHours();
 	let ranMemberId = 0;
 
@@ -140,7 +140,7 @@ client.once(Events.ClientReady, (c) => {
 
 	setInterval(updatePresence, 300000);
 
-	setInterval(hungyLevel.update, 3600000);
+	// setInterval(hungyLevel.update, 3600000);
 
 	setInterval(checkOnCat, 1800000);
 });
